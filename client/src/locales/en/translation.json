@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "Home",
+    "newCars": "New Cars",
+    "usedCars": "Used Cars",
+    "contact": "Contact Us",
+    "allCars": "All Cars"
+  },
+  "home": {
+    "heroSubtitle": "Quality Cars, Professional Service",
+    "browseNew": "Browse New Cars",
+    "browseUsed": "Browse Used Cars",
+    "categories": "Categories",
+    "popularCars": "Popular Models",
+    "viewAll": "View All",
+    "promotions": "Promotions",
+    "contactUs": "Contact Us",
+    "viewDetails": "View Details",
+    "learnMore": "Learn More"
+  },
+  "car": {
+    "price": "Price",
+    "year": "Year",
+    "mileage": "Mileage",
+    "condition": "Condition",
+    "specifications": "Specifications",
+    "features": "Features",
+    "new": "New",
+    "used": "Used",
+    "brand": "Brand",
+    "model": "Model",
+    "engine": "Engine",
+    "transmission": "Transmission",
+    "fuel": "Fuel Type",
+    "color": "Color",
+    "seats": "Seats",
+    "contactSales": "Contact Sales",
+    "relatedCars": "Related Cars",
+    "loadMore": "Load More",
+    "noResults": "No cars found",
+    "filter": "Filter",
+    "sort": "Sort",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortNewest": "Newest First",
+    "km": "km",
+    "searchPlaceholder": "Search brand, model..."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Our professional sales team is always ready to serve you",
+    "name": "Your Name",
+    "phone": "Phone Number",
+    "message": "Message",
+    "submit": "Submit Inquiry",
+    "submitSuccess": "Submitted successfully! We will contact you soon.",
+    "businessHours": "Business Hours"
+  },
+  "footer": {
+    "about": "About Us",
+    "aboutText": "Professional car dealership offering new and used vehicles with one-stop service.",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info",
+    "followUs": "Follow Us",
+    "copyright": "Copyright",
+    "allRightsReserved": "All Rights Reserved"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Failed to load. Please refresh.",
+    "notFound": "Page Not Found",
+    "backHome": "Back to Home",
+    "currency": "¥",
+    "wan": "0,000"
+  }
+}

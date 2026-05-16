@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "首页",
+    "newCars": "新车",
+    "usedCars": "二手车",
+    "contact": "联系我们",
+    "allCars": "全部车型"
+  },
+  "home": {
+    "heroSubtitle": "品质汽车，专业服务",
+    "browseNew": "浏览新车",
+    "browseUsed": "浏览二手车",
+    "categories": "车辆分类",
+    "popularCars": "热门车型",
+    "viewAll": "查看全部",
+    "promotions": "促销活动",
+    "contactUs": "联系我们",
+    "viewDetails": "查看详情",
+    "learnMore": "了解更多"
+  },
+  "car": {
+    "price": "价格",
+    "year": "年份",
+    "mileage": "里程",
+    "condition": "车况",
+    "specifications": "车辆参数",
+    "features": "配置亮点",
+    "new": "新车",
+    "used": "二手车",
+    "brand": "品牌",
+    "model": "车型",
+    "engine": "发动机",
+    "transmission": "变速箱",
+    "fuel": "燃料类型",
+    "color": "颜色",
+    "seats": "座位数",
+    "contactSales": "联系销售",
+    "relatedCars": "相关推荐",
+    "loadMore": "加载更多",
+    "noResults": "暂无车辆信息",
+    "filter": "筛选",
+    "sort": "排序",
+    "sortPriceAsc": "价格从低到高",
+    "sortPriceDesc": "价格从高到低",
+    "sortNewest": "最新上架",
+    "km": "公里",
+    "searchPlaceholder": "搜索品牌、车型..."
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "我们的专业销售团队随时为您服务",
+    "name": "您的姓名",
+    "phone": "联系电话",
+    "message": "留言内容",
+    "submit": "提交咨询",
+    "submitSuccess": "提交成功，我们将尽快联系您！",
+    "businessHours": "营业时间"
+  },
+  "footer": {
+    "about": "关于我们",
+    "aboutText": "专业汽车销售服务商，提供新车与二手车一站式购车服务。",
+    "quickLinks": "快速链接",
+    "contactInfo": "联系信息",
+    "followUs": "关注我们",
+    "copyright": "版权所有",
+    "allRightsReserved": "保留所有权利"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "加载失败，请刷新重试",
+    "notFound": "页面不存在",
+    "backHome": "返回首页",
+    "currency": "¥",
+    "wan": "万"
+  }
+}
