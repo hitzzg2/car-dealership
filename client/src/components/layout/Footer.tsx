@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
           fontSize: 13,
           color: 'rgba(255,255,255,0.4)',
         }}>
-          © {new Date().getFullYear()} {i18n.language === 'zh' ? '汽车商城' : 'AutoMart'} · {t('footer.allRightsReserved')}
+          © {new Date().getFullYear()} HONGKONG SKS TECHNOLOGY CO., LIMITED · {t('footer.allRightsReserved')}
         </div>
       </div>
     </footer>

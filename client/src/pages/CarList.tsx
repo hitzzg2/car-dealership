@@ -11,7 +11,8 @@ import { getCars, getCategories } from '../api/publicApi';
 
 const { Option } = Select;
 
-const BRANDS = ['宝马', '奔驰', '奥迪', '丰田', '本田', '大众', '特斯拉', '比亚迪', '沃尔沃', '保时捷'];
+const BRANDS = ['BMW', 'Mercedes-Benz', 'Audi', 'Toyota', 'Honda', 'Volkswagen', 'Tesla', 'BYD', 'Volvo', 'Porsche', 'Lexus', 'Ford'];
+const MODELS = ['SUV', 'Sedan', 'Coupe', 'Hatchback', 'Pickup', 'MPV', 'Wagon', 'Convertible'];
 
 const CarList: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -29,6 +30,7 @@ const CarList: React.FC = () => {
     type: searchParams.get('type') || '',
     category: searchParams.get('category') || '',
     brand: '',
+    model: '',
     keyword: '',
     sort: '-createdAt',
     page: 1,
@@ -49,6 +51,7 @@ const CarList: React.FC = () => {
     if (filters.type) params.type = filters.type;
     if (filters.category) params.category = filters.category;
     if (filters.brand) params.brand = filters.brand;
+    if (filters.model) params.model = filters.model;
     if (filters.keyword) params.keyword = filters.keyword;
     if (filters.priceRange[0] > 0) params.minPrice = filters.priceRange[0];
     if (filters.priceRange[1] < 2000000) params.maxPrice = filters.priceRange[1];
@@ -89,6 +92,21 @@ const CarList: React.FC = () => {
 
       <div style={{ marginBottom: 24 }}>
         <label style={{ fontWeight: 600, display: 'block', marginBottom: 8, color: '#1a2035' }}>
+          {t('car.model')}
+        </label>
+        <Select
+          placeholder={t('car.model')}
+          allowClear
+          style={{ width: '100%' }}
+          value={filters.model || undefined}
+          onChange={v => setFilters(f => ({ ...f, model: v || '', page: 1 }))}
+        >
+          {MODELS.map(m => <Option key={m} value={m}>{m}</Option>)}
+        </Select>
+      </div>
+
+      <div style={{ marginBottom: 24 }}>
+        <label style={{ fontWeight: 600, display: 'block', marginBottom: 8, color: '#1a2035' }}>
           类型
         </label>
         <Select
@@ -124,7 +142,7 @@ const CarList: React.FC = () => {
 
       <Button
         block
-        onClick={() => setFilters(f => ({ ...f, brand: '', type: '', priceRange: [0, 2000000], page: 1 }))}
+        onClick={() => setFilters(f => ({ ...f, brand: '', model: '', type: '', priceRange: [0, 2000000], page: 1 }))}
         style={{ borderRadius: 8 }}
       >
         重置筛选
