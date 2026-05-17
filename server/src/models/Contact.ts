@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IContact extends Document {
-  type: 'phone' | 'email' | 'address' | 'social' | 'wechat';
+  type: 'phone' | 'email' | 'address' | 'social' | 'wechat' | 'whatsapp' | 'telegram' | 'facebook' | 'tiktok' | 'instagram';
   label: { zh: string; en: string };
   value: string;
   icon?: string;
@@ -13,7 +13,7 @@ const ContactSchema = new Schema<IContact>(
   {
     type: {
       type: String,
-      enum: ['phone', 'email', 'address', 'social', 'wechat'],
+      enum: ['phone', 'email', 'address', 'social', 'wechat', 'whatsapp', 'telegram', 'facebook', 'tiktok', 'instagram'],
       required: true,
     },
     label: {

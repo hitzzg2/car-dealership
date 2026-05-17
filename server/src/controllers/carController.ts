@@ -4,7 +4,7 @@ import Car from '../models/Car';
 export const getCars = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
-      page = 1, limit = 12, type, category, brand,
+      page = 1, limit = 12, type, category, brand, carModel,
       minPrice, maxPrice, keyword, sort = '-createdAt', isPopular,
     } = req.query;
 
@@ -12,6 +12,7 @@ export const getCars = async (req: Request, res: Response): Promise<void> => {
     if (type) filter.type = type;
     if (category) filter.category = category;
     if (brand) filter.brand = new RegExp(brand as string, 'i');
+    if (carModel) filter.carModel = new RegExp(carModel as string, 'i');
     if (isPopular) filter.isPopular = isPopular === 'true';
     if (minPrice || maxPrice) {
       filter.price = {};
@@ -23,7 +24,7 @@ export const getCars = async (req: Request, res: Response): Promise<void> => {
         { 'name.zh': new RegExp(keyword as string, 'i') },
         { 'name.en': new RegExp(keyword as string, 'i') },
         { brand: new RegExp(keyword as string, 'i') },
-        { model: new RegExp(keyword as string, 'i') },
+        { carModel: new RegExp(keyword as string, 'i') },
       ];
     }
 

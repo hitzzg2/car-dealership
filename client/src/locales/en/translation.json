@@ -29,6 +29,8 @@
     "used": "Used",
     "brand": "Brand",
     "model": "Model",
+    "type": "Type",
+    "priceRange": "Price Range",
     "engine": "Engine",
     "transmission": "Transmission",
     "fuel": "Fuel Type",
@@ -70,7 +72,6 @@
     "error": "Failed to load. Please refresh.",
     "notFound": "Page Not Found",
     "backHome": "Back to Home",
-    "currency": "¥",
-    "wan": "0,000"
+    "currency": "$"
   }
 }

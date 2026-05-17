@@ -6,7 +6,7 @@ export interface ICar extends Document {
   category?: mongoose.Types.ObjectId;
   type: 'new' | 'used';
   brand: string;
-  model: string;
+  carModel: string;
   year: number;
   price: number;
   originalPrice?: number;
@@ -45,7 +45,7 @@ const CarSchema = new Schema<ICar>(
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     type: { type: String, enum: ['new', 'used'], required: true },
     brand: { type: String, required: true, trim: true },
-    model: { type: String, required: true, trim: true },
+    carModel: { type: String, required: true, trim: true },
     year: { type: Number, required: true },
     price: { type: Number, required: true },
     originalPrice: { type: Number },
@@ -71,7 +71,7 @@ const CarSchema = new Schema<ICar>(
   { timestamps: true }
 );
 
-CarSchema.index({ brand: 1, model: 1 });
+CarSchema.index({ brand: 1, carModel: 1 });
 CarSchema.index({ type: 1 });
 CarSchema.index({ isPopular: 1 });
 CarSchema.index({ isActive: 1 });

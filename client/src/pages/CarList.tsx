@@ -30,7 +30,7 @@ const CarList: React.FC = () => {
     type: searchParams.get('type') || '',
     category: searchParams.get('category') || '',
     brand: '',
-    model: '',
+    carModel: '',
     keyword: '',
     sort: '-createdAt',
     page: 1,
@@ -51,7 +51,7 @@ const CarList: React.FC = () => {
     if (filters.type) params.type = filters.type;
     if (filters.category) params.category = filters.category;
     if (filters.brand) params.brand = filters.brand;
-    if (filters.model) params.model = filters.model;
+    if (filters.carModel) params.carModel = filters.carModel;
     if (filters.keyword) params.keyword = filters.keyword;
     if (filters.priceRange[0] > 0) params.minPrice = filters.priceRange[0];
     if (filters.priceRange[1] < 2000000) params.maxPrice = filters.priceRange[1];
@@ -98,8 +98,8 @@ const CarList: React.FC = () => {
           placeholder={t('car.model')}
           allowClear
           style={{ width: '100%' }}
-          value={filters.model || undefined}
-          onChange={v => setFilters(f => ({ ...f, model: v || '', page: 1 }))}
+          value={filters.carModel || undefined}
+          onChange={v => setFilters(f => ({ ...f, carModel: v || '', page: 1 }))}
         >
           {MODELS.map(m => <Option key={m} value={m}>{m}</Option>)}
         </Select>
@@ -107,10 +107,10 @@ const CarList: React.FC = () => {
 
       <div style={{ marginBottom: 24 }}>
         <label style={{ fontWeight: 600, display: 'block', marginBottom: 8, color: '#1a2035' }}>
-          类型
+          {t('car.type')}
         </label>
         <Select
-          placeholder="类型"
+          placeholder={t('car.type')}
           allowClear
           style={{ width: '100%' }}
           value={filters.type || undefined}
@@ -123,7 +123,7 @@ const CarList: React.FC = () => {
 
       <div style={{ marginBottom: 24 }}>
         <label style={{ fontWeight: 600, display: 'block', marginBottom: 8, color: '#1a2035' }}>
-          价格范围
+          {t('car.priceRange')}
         </label>
         <Slider
           range
@@ -132,17 +132,17 @@ const CarList: React.FC = () => {
           step={10000}
           value={filters.priceRange}
           onChange={v => setFilters(f => ({ ...f, priceRange: v as [number, number], page: 1 }))}
-          tooltip={{ formatter: v => `¥${((v || 0) / 10000).toFixed(0)}万` }}
+          tooltip={{ formatter: v => `$${((v || 0) / 10000).toFixed(0)}0K` }}
         />
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#888' }}>
-          <span>¥{(filters.priceRange[0] / 10000).toFixed(0)}万</span>
-          <span>¥{(filters.priceRange[1] / 10000).toFixed(0)}万</span>
+          <span>${filters.priceRange[0].toLocaleString()}</span>
+          <span>${filters.priceRange[1].toLocaleString()}</span>
         </div>
       </div>
 
       <Button
         block
-        onClick={() => setFilters(f => ({ ...f, brand: '', model: '', type: '', priceRange: [0, 2000000], page: 1 }))}
+        onClick={() => setFilters(f => ({ ...f, brand: '', carModel: '', type: '', priceRange: [0, 2000000], page: 1 }))}
         style={{ borderRadius: 8 }}
       >
         Reset Filters
