@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Row, Col } from 'antd';
 import {
-  CarOutlined, MailOutlined,
+  MailOutlined,
   WhatsAppOutlined, WechatOutlined, SendOutlined,
 } from '@ant-design/icons';
 
@@ -17,16 +17,13 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <Col xs={24} md={8}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{
-                width: 40, height: 40,
-                background: 'linear-gradient(135deg, #c9a84c, #e8c97a)',
-                borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <CarOutlined style={{ color: '#1a2035', fontSize: 20 }} />
-              </div>
+              <img
+                src="/favicon.png"
+                alt="AutoSKS"
+                style={{ width: 40, height: 40, objectFit: 'contain', borderRadius: '50%' }}
+              />
               <span style={{ color: 'white', fontSize: 20, fontWeight: 700 }}>
-                {i18n.language === 'zh' ? '汽车商城' : 'AutoSKS'}
+                AutoSKS
               </span>
             </div>
             <p style={{ lineHeight: 1.8, fontSize: 14 }}>{t('footer.aboutText')}</p>

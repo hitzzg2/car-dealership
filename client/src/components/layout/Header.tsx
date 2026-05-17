@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Drawer, Menu } from 'antd';
 import {
-  MenuOutlined, CarOutlined, GlobalOutlined,
+  MenuOutlined, GlobalOutlined,
   PhoneOutlined, CloseOutlined,
 } from '@ant-design/icons';
 
@@ -48,21 +48,18 @@ const Header: React.FC = () => {
       >
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          <div
+          <img
+            src="/favicon.png"
+            alt="AutoSKS"
             style={{
               width: 40,
               height: 40,
-              background: 'linear-gradient(135deg, #c9a84c, #e8c97a)',
+              objectFit: 'contain',
               borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
-          >
-            <CarOutlined style={{ color: '#1a2035', fontSize: 20 }} />
-          </div>
+          />
           <span style={{ color: 'white', fontSize: 20, fontWeight: 700, letterSpacing: 1 }}>
-            {i18n.language === 'zh' ? '汽车商城' : 'AutoMart'}
+            AutoSKS
           </span>
         </Link>
 
@@ -146,8 +143,8 @@ const Header: React.FC = () => {
       <Drawer
         title={
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <CarOutlined style={{ color: '#c9a84c' }} />
-            <span>{i18n.language === 'zh' ? '汽车商城' : 'AutoMart'}</span>
+            <img src="/favicon.png" alt="AutoSKS" style={{ width: 24, height: 24, objectFit: 'contain', borderRadius: '50%' }} />
+            <span>AutoSKS</span>
           </div>
         }
         placement="right"
