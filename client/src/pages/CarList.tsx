@@ -145,7 +145,7 @@ const CarList: React.FC = () => {
         onClick={() => setFilters(f => ({ ...f, brand: '', model: '', type: '', priceRange: [0, 2000000], page: 1 }))}
         style={{ borderRadius: 8 }}
       >
-        重置筛选
+        Reset Filters
       </Button>
     </div>
   );
@@ -191,7 +191,7 @@ const CarList: React.FC = () => {
 
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 24px' }}>
         <div style={{ marginBottom: 16, color: '#888', fontSize: 14 }}>
-          共找到 <strong style={{ color: '#1a2035' }}>{total}</strong> 辆车
+          Found <strong style={{ color: '#1a2035' }}>{total}</strong> car{total !== 1 ? 's' : ''}
         </div>
 
         {loading ? (

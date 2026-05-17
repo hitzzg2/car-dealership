@@ -7,10 +7,10 @@ const NotFound: React.FC = () => (
     <Result
       status="404"
       title="404"
-      subTitle="抱歉，您访问的页面不存在。"
+      subTitle="Sorry, the page you are looking for does not exist."
       extra={
         <Link to="/">
-          <Button type="primary" style={{ background: '#1a2035' }}>返回首页</Button>
+          <Button type="primary" style={{ background: '#1a2035' }}>Back to Home</Button>
         </Link>
       }
     />

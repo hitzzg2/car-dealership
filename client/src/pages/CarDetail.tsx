@@ -51,8 +51,8 @@ const CarDetail: React.FC = () => {
     return (
       <MainLayout>
         <div style={{ textAlign: 'center', padding: 80 }}>
-          <p>车辆不存在</p>
-          <Button onClick={() => navigate('/cars')}>返回列表</Button>
+          <p>Vehicle not found</p>
+          <Button onClick={() => navigate('/cars')}>Back to List</Button>
         </div>
       </MainLayout>
     );
@@ -75,7 +75,7 @@ const CarDetail: React.FC = () => {
             onClick={() => navigate(-1)}
             style={{ color: '#666', paddingLeft: 0 }}
           >
-            返回列表
+            Back to List
           </Button>
         </div>
       </div>
