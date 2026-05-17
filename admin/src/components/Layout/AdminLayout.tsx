@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu, Avatar, Dropdown, Typography } from 'antd';
 import {
-  DashboardOutlined, CarOutlined, TagOutlined,
+  DashboardOutlined, TagOutlined,
   GiftOutlined, PhoneOutlined, LogoutOutlined,
   UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
   TeamOutlined, SettingOutlined,
@@ -76,21 +76,20 @@ const AdminLayout: React.FC = () => {
           borderBottom: '1px solid rgba(255,255,255,0.1)',
           gap: 10,
         }}>
-          <div style={{
-            width: 36,
-            height: 36,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #c9a84c, #e8c97a)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <CarOutlined style={{ color: '#1a2035', fontSize: 18 }} />
-          </div>
+          <img
+            src="/favicon.png"
+            alt="AutoSKS"
+            style={{
+              width: 36,
+              height: 36,
+              objectFit: 'contain',
+              borderRadius: '50%',
+              flexShrink: 0,
+            }}
+          />
           {!collapsed && (
             <span style={{ color: 'white', fontWeight: 700, fontSize: 15, whiteSpace: 'nowrap' }}>
-              汽车商城管理
+              AutoSKS Admin
             </span>
           )}
         </div>
@@ -132,12 +131,12 @@ const AdminLayout: React.FC = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <a
-              href="http://localhost:5173"
+              href="https://www.autosks.com"
               target="_blank"
               rel="noopener noreferrer"
               style={{ fontSize: 13, color: '#666' }}
             >
-              查看前台 →
+              View Website →
             </a>
             <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
