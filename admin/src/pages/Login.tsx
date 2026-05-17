@@ -8,19 +8,21 @@ const { Title, Text } = Typography;
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
 
-  const onFinish = async (values: { email: string; password: string }) => {
+  const onFinish = async (values: { username?: string; email: string; password: string }) => {
     setLoading(true);
     try {
-      const res = await api.post('/auth/login', values);
+      const endpoint = isRegister ? '/auth/register' : '/auth/login';
+      const res = await api.post(endpoint, values);
       const { token, user } = res.data;
       localStorage.setItem('admin_token', token);
       localStorage.setItem('admin_user', JSON.stringify(user));
-      message.success(`欢迎回来，${user.username}！`);
+      message.success(isRegister ? `注册成功，欢迎 ${user.username}！` : `欢迎回来，${user.username}！`);
       navigate('/');
     } catch (err: any) {
-      message.error(err.response?.data?.message || '登录失败，请检查账号密码');
+      message.error(err.response?.data?.message || (isRegister ? '注册失败' : '登录失败，请检查账号密码'));
     } finally {
       setLoading(false);
     }
@@ -80,6 +82,20 @@ const Login: React.FC = () => {
         </div>
 
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
+          {isRegister && (
+            <Form.Item
+              name="username"
+              rules={[{ required: true, message: '请输入用户名' }]}
+            >
+              <Input
+                prefix={<UserOutlined style={{ color: '#bbb' }} />}
+                placeholder="用户名"
+                size="large"
+                style={{ borderRadius: 10, height: 48 }}
+              />
+            </Form.Item>
+          )}
+
           <Form.Item
             name="email"
             rules={[
@@ -123,9 +139,19 @@ const Login: React.FC = () => {
               marginTop: 8,
             }}
           >
-            登录管理后台
+            {isRegister ? '注册账号' : '登录管理后台'}
           </Button>
         </Form>
+
+        <div style={{ textAlign: 'center', marginTop: 16 }}>
+          <Text
+            type="secondary"
+            style={{ cursor: 'pointer', fontSize: 13 }}
+            onClick={() => setIsRegister(!isRegister)}
+          >
+            {isRegister ? '已有账号？去登录' : '没有账号？去注册'}
+          </Text>
+        </div>
 
         <Divider style={{ margin: '28px 0 20px' }}>
           <Text type="secondary" style={{ fontSize: 12 }}>默认账号</Text>
