@@ -14,7 +14,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Title } = Typography;
 
-const BRANDS = ['宝马', '奔驰', '奥迪', '丰田', '本田', '大众', '特斯拉', '比亚迪', '沃尔沃', '保时捷', '雷克萨斯', '凯迪拉克'];
+const BRANDS = ['BMW', 'Mercedes-Benz', 'Audi', 'Toyota', 'Honda', 'Volkswagen', 'Tesla', 'BYD', 'Volvo', 'Porsche', 'Lexus', 'Cadillac'];
 
 const CarManagement: React.FC = () => {
   const [cars, setCars] = useState<any[]>([]);
@@ -76,10 +76,10 @@ const CarManagement: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/cars/admin/${id}`);
-      message.success('车辆已删除');
+      message.success('Car deleted');
       fetchCars();
     } catch {
-      message.error('删除失败');
+      message.error('Delete failed');
     }
   };
 
@@ -112,9 +112,9 @@ const CarManagement: React.FC = () => {
       } else {
         setUploadedImages(prev => [...prev, ...urls]);
       }
-      message.success('上传成功');
+      message.success('Upload successful');
     } catch {
-      message.error('上传失败');
+      message.error('Upload failed');
     } finally {
       setUploading(false);
     }
@@ -149,16 +149,16 @@ const CarManagement: React.FC = () => {
 
       if (editingCar) {
         await api.put(`/cars/admin/${editingCar._id}`, payload);
-        message.success('车辆更新成功');
+        message.success('Car updated');
       } else {
         await api.post('/cars/admin/create', payload);
-        message.success('车辆创建成功');
+        message.success('Car created');
       }
       setModalOpen(false);
       fetchCars();
     } catch (err: any) {
       if (!err.errorFields) {
-        message.error(err.response?.data?.message || '操作失败');
+        message.error(err.response?.data?.message || 'Operation failed');
       }
     } finally {
       setSubmitting(false);
@@ -167,7 +167,7 @@ const CarManagement: React.FC = () => {
 
   const columns = [
     {
-      title: '图片',
+      title: 'Image',
       dataIndex: 'images',
       width: 80,
       render: (imgs: string[]) => (
@@ -181,7 +181,7 @@ const CarManagement: React.FC = () => {
       ),
     },
     {
-      title: '车辆名称',
+      title: 'Car Name',
       render: (r: any) => (
         <div>
           <div style={{ fontWeight: 600 }}>{r.name?.zh}</div>
@@ -190,27 +190,27 @@ const CarManagement: React.FC = () => {
       ),
     },
     {
-      title: '类型',
+      title: 'Type',
       dataIndex: 'type',
       width: 80,
       render: (type: string) => (
         <Tag color={type === 'new' ? 'green' : 'orange'}>
-          {type === 'new' ? '新车' : '二手车'}
+          {type === 'new' ? 'New' : 'Used'}
         </Tag>
       ),
     },
     {
-      title: '价格',
+      title: 'Price',
       dataIndex: 'price',
       width: 100,
       render: (price: number) => (
         <span style={{ color: '#e53e3e', fontWeight: 600 }}>
-          ¥{(price / 10000).toFixed(1)}万
+          ¥{price?.toLocaleString?.() || price}
         </span>
       ),
     },
     {
-      title: '状态',
+      title: 'Status',
       width: 80,
       render: (r: any) => (
         <Switch
@@ -221,7 +221,7 @@ const CarManagement: React.FC = () => {
       ),
     },
     {
-      title: '热门',
+      title: 'Popular',
       width: 80,
       render: (r: any) => (
         <Switch
@@ -232,12 +232,12 @@ const CarManagement: React.FC = () => {
       ),
     },
     {
-      title: '操作',
+      title: 'Actions',
       width: 120,
       render: (r: any) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} />
-          <Popconfirm title="确认删除？" onConfirm={() => handleDelete(r._id)}>
+          <Popconfirm title="Confirm delete?" onConfirm={() => handleDelete(r._id)}>
             <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
@@ -248,10 +248,10 @@ const CarManagement: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <Title level={4} style={{ margin: 0 }}>车辆管理</Title>
+        <Title level={4} style={{ margin: 0 }}>Car Management</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}
           style={{ background: '#1a2035', borderColor: '#1a2035' }}>
-          添加车辆
+          Add Car
         </Button>
       </div>
 
@@ -272,111 +272,111 @@ const CarManagement: React.FC = () => {
 
       {/* Create/Edit Modal */}
       <Modal
-        title={editingCar ? '编辑车辆' : '添加车辆'}
+        title={editingCar ? 'Edit Car' : 'Add Car'}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={onSubmit}
         confirmLoading={submitting}
         width={800}
-        okText="保存"
-        cancelText="取消"
+        okText="Save"
+        cancelText="Cancel"
       >
         <Form form={form} layout="vertical">
           <Tabs
             items={[
               {
                 key: 'basic',
-                label: '基本信息',
+                label: 'Basic Info',
                 children: (
                   <>
                     <Row gutter={16}>
                       <Col span={12}>
-                        <Form.Item name="name_zh" label="车辆名称（中文）" rules={[{ required: true }]}>
-                          <Input placeholder="如：宝马 5系 2024款" />
+                        <Form.Item name="name_zh" label="Car Name (Chinese)" rules={[{ required: true }]}>
+                          <Input placeholder="e.g. BMW 5 Series 2024" />
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <Form.Item name="name_en" label="车辆名称（英文）" rules={[{ required: true }]}>
+                        <Form.Item name="name_en" label="Car Name (English)" rules={[{ required: true }]}>
                           <Input placeholder="e.g. BMW 5 Series 2024" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="type" label="类型" rules={[{ required: true }]}>
-                          <Select placeholder="选择类型">
-                            <Option value="new">新车</Option>
-                            <Option value="used">二手车</Option>
+                        <Form.Item name="type" label="Type" rules={[{ required: true }]}>
+                          <Select placeholder="Select type">
+                            <Option value="new">New</Option>
+                            <Option value="used">Used</Option>
                           </Select>
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="brand" label="品牌" rules={[{ required: true }]}>
-                          <Select showSearch placeholder="选择品牌">
+                        <Form.Item name="brand" label="Brand" rules={[{ required: true }]}>
+                          <Select showSearch placeholder="Select brand">
                             {BRANDS.map(b => <Option key={b} value={b}>{b}</Option>)}
                           </Select>
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="model" label="车型" rules={[{ required: true }]}>
-                          <Input placeholder="如：5系" />
+                        <Form.Item name="model" label="Model" rules={[{ required: true }]}>
+                          <Input placeholder="e.g. 5 Series" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="year" label="年份" rules={[{ required: true }]}>
+                        <Form.Item name="year" label="Year" rules={[{ required: true }]}>
                           <InputNumber style={{ width: '100%' }} min={1990} max={2030} placeholder="2024" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="price" label="售价（元）" rules={[{ required: true }]}>
+                        <Form.Item name="price" label="Price (CNY)" rules={[{ required: true }]}>
                           <InputNumber style={{ width: '100%' }} min={0} placeholder="498000" formatter={v => `${v}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="originalPrice" label="原价（元）">
-                          <InputNumber style={{ width: '100%' }} min={0} placeholder="选填，划线价" />
+                        <Form.Item name="originalPrice" label="Original Price (CNY)">
+                          <InputNumber style={{ width: '100%' }} min={0} placeholder="Optional, strikethrough price" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="category" label="分类">
-                          <Select allowClear placeholder="选择分类">
+                        <Form.Item name="category" label="Category">
+                          <Select allowClear placeholder="Select category">
                             {categories.map(c => (
-                              <Option key={c._id} value={c._id}>{c.name?.zh}</Option>
+                              <Option key={c._id} value={c._id}>{c.name?.en || c.name?.zh}</Option>
                             ))}
                           </Select>
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="mileage" label="里程数（公里，二手车填）">
+                        <Form.Item name="mileage" label="Mileage (km, for used cars)">
                           <InputNumber style={{ width: '100%' }} min={0} />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="condition" label="车况（二手车）">
-                          <Input placeholder="如：极好/良好" />
+                        <Form.Item name="condition" label="Condition (used cars)">
+                          <Input placeholder="e.g. Excellent/Good" />
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Form.Item name="description_zh" label="车辆描述（中文）">
-                      <TextArea rows={3} placeholder="详细描述车辆特点..." />
+                    <Form.Item name="description_zh" label="Description (Chinese)">
+                      <TextArea rows={3} placeholder="Detailed description..." />
                     </Form.Item>
-                    <Form.Item name="description_en" label="车辆描述（英文）">
+                    <Form.Item name="description_en" label="Description (English)">
                       <TextArea rows={3} placeholder="Describe the car in English..." />
                     </Form.Item>
-                    <Form.Item name="features" label="配置亮点（回车分隔）">
-                      <Select mode="tags" placeholder="输入配置，回车确认" tokenSeparators={[',']} />
+                    <Form.Item name="features" label="Features (press Enter to separate)">
+                      <Select mode="tags" placeholder="Enter features, press Enter" tokenSeparators={[',']} />
                     </Form.Item>
                     <Row gutter={16}>
                       <Col span={8}>
-                        <Form.Item name="isActive" label="上架状态" valuePropName="checked" initialValue={true}>
-                          <Switch checkedChildren="上架" unCheckedChildren="下架" />
+                        <Form.Item name="isActive" label="Listing Status" valuePropName="checked" initialValue={true}>
+                          <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="isPopular" label="热门推荐" valuePropName="checked" initialValue={false}>
-                          <Switch checkedChildren="是" unCheckedChildren="否" />
+                        <Form.Item name="isPopular" label="Popular" valuePropName="checked" initialValue={false}>
+                          <Switch checkedChildren="Yes" unCheckedChildren="No" />
                         </Form.Item>
                       </Col>
                       <Col span={8}>
-                        <Form.Item name="sortOrder" label="排序（越小越靠前）" initialValue={0}>
+                        <Form.Item name="sortOrder" label="Sort Order (smaller first)" initialValue={0}>
                           <InputNumber style={{ width: '100%' }} min={0} />
                         </Form.Item>
                       </Col>
@@ -386,15 +386,15 @@ const CarManagement: React.FC = () => {
               },
               {
                 key: 'specs',
-                label: '车辆参数',
+                label: 'Specifications',
                 children: (
                   <Row gutter={16}>
                     {[
-                      { name: 'engine', label: '发动机', placeholder: '如：2.0T' },
-                      { name: 'transmission', label: '变速箱', placeholder: '如：8AT' },
-                      { name: 'fuel', label: '燃油类型', placeholder: '汽油/柴油/电动/混动' },
-                      { name: 'color', label: '颜色', placeholder: '如：珍珠白' },
-                      { name: 'displacement', label: '排量', placeholder: '如：2.0L' },
+                      { name: 'engine', label: 'Engine', placeholder: 'e.g. 2.0T' },
+                      { name: 'transmission', label: 'Transmission', placeholder: 'e.g. 8AT' },
+                      { name: 'fuel', label: 'Fuel Type', placeholder: 'Gasoline/Diesel/Electric/Hybrid' },
+                      { name: 'color', label: 'Color', placeholder: 'e.g. Pearl White' },
+                      { name: 'displacement', label: 'Displacement', placeholder: 'e.g. 2.0L' },
                     ].map(f => (
                       <Col span={12} key={f.name}>
                         <Form.Item name={f.name} label={f.label}>
@@ -403,7 +403,7 @@ const CarManagement: React.FC = () => {
                       </Col>
                     ))}
                     <Col span={12}>
-                      <Form.Item name="seats" label="座位数">
+                      <Form.Item name="seats" label="Seats">
                         <InputNumber style={{ width: '100%' }} min={1} max={20} />
                       </Form.Item>
                     </Col>
@@ -412,11 +412,11 @@ const CarManagement: React.FC = () => {
               },
               {
                 key: 'media',
-                label: '图片/视频',
+                label: 'Images & Videos',
                 children: (
                   <>
                     <div style={{ marginBottom: 16 }}>
-                      <Title level={5}>上传图片</Title>
+                      <Title level={5}>Upload Images</Title>
                       <Upload
                         accept="image/*"
                         multiple
@@ -424,10 +424,10 @@ const CarManagement: React.FC = () => {
                         beforeUpload={handleUpload}
                       >
                         <Button icon={<UploadOutlined />} loading={uploading}>
-                          选择图片
+                          Select Images
                         </Button>
                         <span style={{ marginLeft: 8, color: '#888', fontSize: 12 }}>
-                          支持 JPG/PNG/WEBP，最大 50MB
+                          JPG/PNG/WEBP supported, max 50MB
                         </span>
                       </Upload>
                       <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -454,7 +454,7 @@ const CarManagement: React.FC = () => {
                     </div>
                     <Divider />
                     <div>
-                      <Title level={5}>上传视频</Title>
+                      <Title level={5}>Upload Videos</Title>
                       <Upload
                         accept="video/*"
                         multiple
@@ -462,10 +462,10 @@ const CarManagement: React.FC = () => {
                         beforeUpload={handleUpload}
                       >
                         <Button icon={<UploadOutlined />} loading={uploading}>
-                          选择视频
+                          Select Videos
                         </Button>
                         <span style={{ marginLeft: 8, color: '#888', fontSize: 12 }}>
-                          支持 MP4/MOV，最大 50MB
+                          MP4/MOV supported, max 50MB
                         </span>
                       </Upload>
                       <div style={{ marginTop: 12 }}>
@@ -477,7 +477,7 @@ const CarManagement: React.FC = () => {
                               danger
                               onClick={() => setUploadedVideos(vs => vs.filter((_, idx) => idx !== i))}
                             >
-                              删除
+                              Delete
                             </Button>
                           </div>
                         ))}

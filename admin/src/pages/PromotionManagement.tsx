@@ -58,9 +58,9 @@ const PromotionManagement: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/promotions/admin/${id}`);
-      message.success('促销活动已删除');
+      message.success('Promotion deleted');
       fetch();
-    } catch { message.error('删除失败'); }
+    } catch { message.error('Delete failed'); }
   };
 
   const handleUpload = async (file: File) => {
@@ -72,8 +72,8 @@ const PromotionManagement: React.FC = () => {
       });
       const urls: string[] = res.data.data || [];
       if (urls[0]) setUploadedImage(urls[0]);
-      message.success('图片上传成功');
-    } catch { message.error('上传失败'); }
+      message.success('Image uploaded');
+    } catch { message.error('Upload failed'); }
     return false;
   };
 
@@ -94,49 +94,49 @@ const PromotionManagement: React.FC = () => {
       };
       if (editingItem) {
         await api.put(`/promotions/admin/${editingItem._id}`, payload);
-        message.success('已更新');
+        message.success('Updated');
       } else {
         await api.post('/promotions/admin/create', payload);
-        message.success('已创建');
+        message.success('Created');
       }
       setModalOpen(false);
       fetch();
     } catch (err: any) {
-      if (!err.errorFields) message.error(err.response?.data?.message || '操作失败');
+      if (!err.errorFields) message.error(err.response?.data?.message || 'Operation failed');
     } finally { setSubmitting(false); }
   };
 
   const columns = [
     {
-      title: '图片',
+      title: 'Image',
       dataIndex: 'image',
       width: 80,
       render: (img: string) => img ? (
         <Image src={img} width={60} height={40} style={{ objectFit: 'cover', borderRadius: 6 }} preview={false} />
       ) : '-',
     },
-    { title: '标题', render: (r: any) => r.title?.zh },
+    { title: 'Title', render: (r: any) => r.title?.zh },
     {
-      title: '类型',
+      title: 'Type',
       dataIndex: 'type',
       width: 80,
       render: (type: string) => (
         <Tag color={type === 'banner' ? 'blue' : type === 'special' ? 'red' : 'orange'}>
-          {type === 'banner' ? '轮播图' : type === 'special' ? '特惠' : '折扣'}
+          {type === 'banner' ? 'Banner' : type === 'special' ? 'Special' : 'Discount'}
         </Tag>
       ),
     },
     {
-      title: '有效期',
+      title: 'Valid Period',
       render: (r: any) => (
         <span style={{ fontSize: 12, color: '#666' }}>
-          {new Date(r.startDate).toLocaleDateString('zh-CN')} ~{' '}
-          {new Date(r.endDate).toLocaleDateString('zh-CN')}
+          {new Date(r.startDate).toLocaleDateString('en-US')} ~{' '}
+          {new Date(r.endDate).toLocaleDateString('en-US')}
         </span>
       ),
     },
     {
-      title: '状态',
+      title: 'Status',
       width: 80,
       render: (r: any) => (
         <Switch size="small" checked={r.isActive}
@@ -145,12 +145,12 @@ const PromotionManagement: React.FC = () => {
       ),
     },
     {
-      title: '操作',
+      title: 'Actions',
       width: 100,
       render: (r: any) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} />
-          <Popconfirm title="确认删除？" onConfirm={() => handleDelete(r._id)}>
+          <Popconfirm title="Confirm delete?" onConfirm={() => handleDelete(r._id)}>
             <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
@@ -161,10 +161,10 @@ const PromotionManagement: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <Title level={4} style={{ margin: 0 }}>促销/轮播管理</Title>
+        <Title level={4} style={{ margin: 0 }}>Promotion & Banner Management</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}
           style={{ background: '#1a2035', borderColor: '#1a2035' }}>
-          添加促销
+          Add Promotion
         </Button>
       </div>
 
@@ -172,49 +172,49 @@ const PromotionManagement: React.FC = () => {
         pagination={false} style={{ background: 'white', borderRadius: 12 }} />
 
       <Modal
-        title={editingItem ? '编辑促销' : '添加促销'}
+        title={editingItem ? 'Edit Promotion' : 'Add Promotion'}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={onSubmit}
         confirmLoading={submitting}
         width={640}
-        okText="保存" cancelText="取消"
+        okText="Save" cancelText="Cancel"
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="type" label="类型" rules={[{ required: true }]}>
-            <Select placeholder="选择类型">
-              <Option value="banner">轮播Banner</Option>
-              <Option value="discount">折扣活动</Option>
-              <Option value="special">特惠专场</Option>
+          <Form.Item name="type" label="Type" rules={[{ required: true }]}>
+            <Select placeholder="Select type">
+              <Option value="banner">Banner</Option>
+              <Option value="discount">Discount</Option>
+              <Option value="special">Special Offer</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="title_zh" label="标题（中文）" rules={[{ required: true }]}>
+          <Form.Item name="title_zh" label="Title (Chinese)" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="title_en" label="标题（英文）">
+          <Form.Item name="title_en" label="Title (English)">
             <Input />
           </Form.Item>
-          <Form.Item name="description_zh" label="描述（中文）">
+          <Form.Item name="description_zh" label="Description (Chinese)">
             <TextArea rows={2} />
           </Form.Item>
-          <Form.Item name="description_en" label="描述（英文）">
+          <Form.Item name="description_en" label="Description (English)">
             <TextArea rows={2} />
           </Form.Item>
-          <Form.Item label="促销图片" required>
+          <Form.Item label="Promotion Image" required>
             <Upload accept="image/*" showUploadList={false} beforeUpload={handleUpload}>
-              <Button icon={<UploadOutlined />}>上传图片</Button>
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
             {uploadedImage && (
               <img src={uploadedImage} alt="" style={{ marginTop: 8, width: 200, borderRadius: 8 }} />
             )}
           </Form.Item>
-          <Form.Item name="link" label="跳转链接">
+          <Form.Item name="link" label="Link">
             <Input placeholder="/cars?type=new" />
           </Form.Item>
-          <Form.Item name="dateRange" label="有效期" rules={[{ required: true }]}>
+          <Form.Item name="dateRange" label="Valid Period" rules={[{ required: true }]}>
             <RangePicker style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="isActive" label="立即启用" valuePropName="checked" initialValue={true}>
+          <Form.Item name="isActive" label="Active" valuePropName="checked" initialValue={true}>
             <Switch />
           </Form.Item>
         </Form>

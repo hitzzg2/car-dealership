@@ -46,9 +46,9 @@ const CategoryManagement: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/categories/admin/${id}`);
-      message.success('分类已删除');
+      message.success('Category deleted');
       fetch();
-    } catch { message.error('删除失败'); }
+    } catch { message.error('Delete failed'); }
   };
 
   const onSubmit = async () => {
@@ -63,28 +63,28 @@ const CategoryManagement: React.FC = () => {
 
       if (editingItem) {
         await api.put(`/categories/admin/${editingItem._id}`, payload);
-        message.success('分类已更新');
+        message.success('Category updated');
       } else {
         await api.post('/categories/admin/create', payload);
-        message.success('分类已创建');
+        message.success('Category created');
       }
       setModalOpen(false);
       fetch();
     } catch (err: any) {
-      if (!err.errorFields) message.error(err.response?.data?.message || '操作失败');
+      if (!err.errorFields) message.error(err.response?.data?.message || 'Operation failed');
     } finally {
       setSubmitting(false);
     }
   };
 
   const columns = [
-    { title: '中文名称', render: (r: any) => r.name?.zh },
-    { title: '英文名称', render: (r: any) => r.name?.en },
+    { title: 'Chinese Name', render: (r: any) => r.name?.zh },
+    { title: 'English Name', render: (r: any) => r.name?.en },
     { title: 'Slug', dataIndex: 'slug' },
-    { title: '图标', dataIndex: 'icon' },
-    { title: '排序', dataIndex: 'sortOrder', width: 80 },
+    { title: 'Icon', dataIndex: 'icon' },
+    { title: 'Sort', dataIndex: 'sortOrder', width: 80 },
     {
-      title: '状态',
+      title: 'Status',
       width: 80,
       render: (r: any) => (
         <Switch
@@ -98,12 +98,12 @@ const CategoryManagement: React.FC = () => {
       ),
     },
     {
-      title: '操作',
+      title: 'Actions',
       width: 100,
       render: (r: any) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} />
-          <Popconfirm title="确认删除？" onConfirm={() => handleDelete(r._id)}>
+          <Popconfirm title="Confirm delete?" onConfirm={() => handleDelete(r._id)}>
             <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
@@ -114,10 +114,10 @@ const CategoryManagement: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <Title level={4} style={{ margin: 0 }}>分类管理</Title>
+        <Title level={4} style={{ margin: 0 }}>Category Management</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}
           style={{ background: '#1a2035', borderColor: '#1a2035' }}>
-          添加分类
+          Add Category
         </Button>
       </div>
 
@@ -125,27 +125,27 @@ const CategoryManagement: React.FC = () => {
         pagination={false} style={{ background: 'white', borderRadius: 12 }} />
 
       <Modal
-        title={editingItem ? '编辑分类' : '添加分类'}
+        title={editingItem ? 'Edit Category' : 'Add Category'}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={onSubmit}
         confirmLoading={submitting}
-        okText="保存" cancelText="取消"
+        okText="Save" cancelText="Cancel"
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name_zh" label="分类名称（中文）" rules={[{ required: true }]}>
-            <Input placeholder="如：新车" />
-          </Form.Item>
-          <Form.Item name="name_en" label="分类名称（英文）">
+          <Form.Item name="name_zh" label="Category Name (Chinese)" rules={[{ required: true }]}>
             <Input placeholder="e.g. New Cars" />
           </Form.Item>
-          <Form.Item name="slug" label="Slug（URL标识）" rules={[{ required: true }]}>
-            <Input placeholder="如：new-cars" />
+          <Form.Item name="name_en" label="Category Name (English)">
+            <Input placeholder="e.g. New Cars" />
           </Form.Item>
-          <Form.Item name="icon" label="图标名称">
-            <Input placeholder="如：car / star / thunderbolt" />
+          <Form.Item name="slug" label="Slug (URL identifier)" rules={[{ required: true }]}>
+            <Input placeholder="e.g. new-cars" />
           </Form.Item>
-          <Form.Item name="sortOrder" label="排序" initialValue={0}>
+          <Form.Item name="icon" label="Icon Name">
+            <Input placeholder="e.g. car / star / thunderbolt" />
+          </Form.Item>
+          <Form.Item name="sortOrder" label="Sort Order" initialValue={0}>
             <Input type="number" />
           </Form.Item>
         </Form>

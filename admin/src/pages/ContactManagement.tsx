@@ -10,11 +10,11 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const typeLabels: Record<string, string> = {
-  phone: '电话',
-  email: '邮箱',
-  address: '地址',
-  wechat: '微信',
-  social: '其他',
+  phone: 'Phone',
+  email: 'Email',
+  address: 'Address',
+  wechat: 'WeChat',
+  social: 'Other',
 };
 
 const ContactManagement: React.FC = () => {
@@ -55,9 +55,9 @@ const ContactManagement: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/contacts/admin/${id}`);
-      message.success('联系信息已删除');
+      message.success('Contact deleted');
       fetch();
-    } catch { message.error('删除失败'); }
+    } catch { message.error('Delete failed'); }
   };
 
   const onSubmit = async () => {
@@ -71,27 +71,27 @@ const ContactManagement: React.FC = () => {
       delete payload.label_zh; delete payload.label_en;
       if (editingItem) {
         await api.put(`/contacts/admin/${editingItem._id}`, payload);
-        message.success('已更新');
+        message.success('Updated');
       } else {
         await api.post('/contacts/admin/create', payload);
-        message.success('已添加');
+        message.success('Added');
       }
       setModalOpen(false);
       fetch();
     } catch (err: any) {
-      if (!err.errorFields) message.error(err.response?.data?.message || '操作失败');
+      if (!err.errorFields) message.error(err.response?.data?.message || 'Operation failed');
     } finally { setSubmitting(false); }
   };
 
   const columns = [
-    { title: '类型', dataIndex: 'type', width: 80, render: (t: string) => <Tag>{typeLabels[t] || t}</Tag> },
-    { title: '标签（中文）', render: (r: any) => r.label?.zh },
-    { title: '标签（英文）', render: (r: any) => r.label?.en },
-    { title: '内容', dataIndex: 'value' },
-    { title: '图标', dataIndex: 'icon' },
-    { title: '排序', dataIndex: 'sortOrder', width: 60 },
+    { title: 'Type', dataIndex: 'type', width: 80, render: (t: string) => <Tag>{typeLabels[t] || t}</Tag> },
+    { title: 'Label (Chinese)', render: (r: any) => r.label?.zh },
+    { title: 'Label (English)', render: (r: any) => r.label?.en },
+    { title: 'Value', dataIndex: 'value' },
+    { title: 'Icon', dataIndex: 'icon' },
+    { title: 'Sort', dataIndex: 'sortOrder', width: 60 },
     {
-      title: '公开显示',
+      title: 'Public Display',
       width: 80,
       render: (r: any) => (
         <Switch size="small" checked={r.isPublic}
@@ -100,12 +100,12 @@ const ContactManagement: React.FC = () => {
       ),
     },
     {
-      title: '操作',
+      title: 'Actions',
       width: 100,
       render: (r: any) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} />
-          <Popconfirm title="确认删除？" onConfirm={() => handleDelete(r._id)}>
+          <Popconfirm title="Confirm delete?" onConfirm={() => handleDelete(r._id)}>
             <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
@@ -116,10 +116,10 @@ const ContactManagement: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <Title level={4} style={{ margin: 0 }}>联系信息管理</Title>
+        <Title level={4} style={{ margin: 0 }}>Contact Management</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}
           style={{ background: '#1a2035', borderColor: '#1a2035' }}>
-          添加联系方式
+          Add Contact
         </Button>
       </div>
 
@@ -127,37 +127,37 @@ const ContactManagement: React.FC = () => {
         pagination={false} style={{ background: 'white', borderRadius: 12 }} />
 
       <Modal
-        title={editingItem ? '编辑联系信息' : '添加联系信息'}
+        title={editingItem ? 'Edit Contact' : 'Add Contact'}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={onSubmit}
         confirmLoading={submitting}
-        okText="保存" cancelText="取消"
+        okText="Save" cancelText="Cancel"
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="type" label="类型" rules={[{ required: true }]}>
-            <Select placeholder="选择联系方式类型">
+          <Form.Item name="type" label="Type" rules={[{ required: true }]}>
+            <Select placeholder="Select contact type">
               {Object.entries(typeLabels).map(([v, l]) => (
                 <Option key={v} value={v}>{l}</Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="label_zh" label="标签（中文）" rules={[{ required: true }]}>
-            <Input placeholder="如：销售热线" />
-          </Form.Item>
-          <Form.Item name="label_en" label="标签（英文）">
+          <Form.Item name="label_zh" label="Label (Chinese)" rules={[{ required: true }]}>
             <Input placeholder="e.g. Sales Hotline" />
           </Form.Item>
-          <Form.Item name="value" label="内容" rules={[{ required: true }]}>
-            <Input placeholder="如：400-888-8888" />
+          <Form.Item name="label_en" label="Label (English)">
+            <Input placeholder="e.g. Sales Hotline" />
           </Form.Item>
-          <Form.Item name="icon" label="图标名称（Ant Design icon）">
-            <Input placeholder="如：phone / mail / environment" />
+          <Form.Item name="value" label="Value" rules={[{ required: true }]}>
+            <Input placeholder="e.g. 400-888-8888" />
           </Form.Item>
-          <Form.Item name="sortOrder" label="排序" initialValue={0}>
+          <Form.Item name="icon" label="Icon Name (Ant Design icon)">
+            <Input placeholder="e.g. phone / mail / environment" />
+          </Form.Item>
+          <Form.Item name="sortOrder" label="Sort Order" initialValue={0}>
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="isPublic" label="公开显示" valuePropName="checked" initialValue={true}>
+          <Form.Item name="isPublic" label="Public Display" valuePropName="checked" initialValue={true}>
             <Switch />
           </Form.Item>
         </Form>
