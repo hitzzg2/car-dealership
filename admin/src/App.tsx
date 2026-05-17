@@ -9,6 +9,8 @@ import CarManagement from './pages/CarManagement';
 import CategoryManagement from './pages/CategoryManagement';
 import PromotionManagement from './pages/PromotionManagement';
 import ContactManagement from './pages/ContactManagement';
+import Profile from './pages/Profile';
+import UserManagement from './pages/UserManagement';
 
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const token = localStorage.getItem('admin_token');
@@ -45,6 +47,8 @@ const App: React.FC = () => {
               <Route path="categories" element={<CategoryManagement />} />
               <Route path="promotions" element={<PromotionManagement />} />
               <Route path="contacts" element={<ContactManagement />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="users" element={<UserManagement />} />
             </Route>
           </Routes>
         </BrowserRouter>

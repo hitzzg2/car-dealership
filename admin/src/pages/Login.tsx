@@ -16,11 +16,16 @@ const Login: React.FC = () => {
     try {
       const endpoint = isRegister ? '/auth/register' : '/auth/login';
       const res = await api.post(endpoint, values);
-      const { token, user } = res.data;
-      localStorage.setItem('admin_token', token);
-      localStorage.setItem('admin_user', JSON.stringify(user));
-      message.success(isRegister ? `注册成功，欢迎 ${user.username}！` : `欢迎回来，${user.username}！`);
-      navigate('/');
+      if (isRegister) {
+        message.success(res.data.message || '注册申请已提交');
+        setIsRegister(false);
+      } else {
+        const { token, user } = res.data;
+        localStorage.setItem('admin_token', token);
+        localStorage.setItem('admin_user', JSON.stringify(user));
+        message.success(`欢迎回来，${user.username}！`);
+        navigate('/');
+      }
     } catch (err: any) {
       message.error(err.response?.data?.message || (isRegister ? '注册失败' : '登录失败，请检查账号密码'));
     } finally {
@@ -37,7 +42,6 @@ const Login: React.FC = () => {
       justifyContent: 'center',
       padding: 24,
     }}>
-      {/* Background decorations */}
       <div style={{
         position: 'fixed', top: -100, right: -100,
         width: 400, height: 400, borderRadius: '50%',
@@ -62,16 +66,12 @@ const Login: React.FC = () => {
         }}
         bodyStyle={{ padding: '48px 40px' }}
       >
-        {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
           <div style={{
-            width: 64,
-            height: 64,
+            width: 64, height: 64,
             background: 'linear-gradient(135deg, #1a2035, #2d3a5e)',
             borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px',
             boxShadow: '0 8px 24px rgba(26,32,53,0.4)',
           }}>
@@ -139,7 +139,7 @@ const Login: React.FC = () => {
               marginTop: 8,
             }}
           >
-            {isRegister ? '注册账号' : '登录管理后台'}
+            {isRegister ? '提交注册申请' : '登录管理后台'}
           </Button>
         </Form>
 
@@ -153,21 +153,11 @@ const Login: React.FC = () => {
           </Text>
         </div>
 
-        <Divider style={{ margin: '28px 0 20px' }}>
-          <Text type="secondary" style={{ fontSize: 12 }}>默认账号</Text>
-        </Divider>
-        <div style={{
-          background: '#f8f9fa',
-          borderRadius: 8,
-          padding: '12px 16px',
-          fontSize: 13,
-          color: '#666',
-          lineHeight: 1.8,
-        }}>
-          <div>📧 邮箱: admin@cardealership.com</div>
-          <div>🔑 密码: Admin@123456</div>
-          <div style={{ color: '#e53e3e', fontSize: 12, marginTop: 4 }}>⚠️ 首次登录后请修改密码</div>
-        </div>
+        {isRegister && (
+          <div style={{ marginTop: 16, fontSize: 12, color: '#999', textAlign: 'center' }}>
+            注册后需等待管理员审批才能登录
+          </div>
+        )}
       </Card>
     </div>
   );

@@ -193,6 +193,7 @@ const seed = async (): Promise<void> => {
     password: 'Admin@123456',
     role: 'admin',
     isActive: true,
+    isApproved: true,
   });
   console.log('✅ Default admin user created');
 

@@ -8,6 +8,7 @@ export interface IUser extends Document {
   tencent_openid?: string;
   role: 'admin' | 'editor';
   isActive: boolean;
+  isApproved: boolean;
   lastLogin?: Date;
   comparePassword(password: string): Promise<boolean>;
 }
@@ -18,8 +19,9 @@ const UserSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String },
     tencent_openid: { type: String },
-    role: { type: String, enum: ['admin', 'editor'], default: 'admin' },
-    isActive: { type: Boolean, default: true },
+    role: { type: String, enum: ['admin', 'editor'], default: 'editor' },
+    isActive: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: false },
     lastLogin: { type: Date },
   },
   { timestamps: true }

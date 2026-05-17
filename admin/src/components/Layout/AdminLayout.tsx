@@ -5,6 +5,7 @@ import {
   DashboardOutlined, CarOutlined, TagOutlined,
   GiftOutlined, PhoneOutlined, LogoutOutlined,
   UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
+  TeamOutlined, SettingOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -29,9 +30,17 @@ const AdminLayout: React.FC = () => {
     { key: '/categories', icon: <TagOutlined />, label: '分类管理' },
     { key: '/promotions', icon: <GiftOutlined />, label: '促销管理' },
     { key: '/contacts', icon: <PhoneOutlined />, label: '联系信息' },
+    ...(user.role === 'admin' ? [{ key: '/users', icon: <TeamOutlined />, label: '用户管理' }] : []),
+    { key: '/profile', icon: <SettingOutlined />, label: '个人信息' },
   ];
 
   const userMenuItems = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: '个人信息',
+      onClick: () => navigate('/profile'),
+    },
     {
       key: 'logout',
       icon: <LogoutOutlined />,
