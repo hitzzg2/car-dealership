@@ -9,6 +9,41 @@ const generateToken = (id: string): string => {
   } as any);
 };
 
+export const register = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      res.status(400).json({ success: false, message: '请提供用户名、邮箱和密码' });
+      return;
+    }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).json({ success: false, message: '该邮箱已被注册' });
+      return;
+    }
+    const user = await User.create({
+      username,
+      email,
+      password,
+      role: 'admin',
+      isActive: true,
+    });
+    const token = generateToken(user._id.toString());
+    res.status(201).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: '注册失败' });
+  }
+};
+
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;

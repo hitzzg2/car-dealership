@@ -186,8 +186,18 @@ const seed = async (): Promise<void> => {
   ]);
   console.log('✅ Contact / Social media info created');
 
+  // Create default admin user
+  await User.create({
+    username: 'Admin',
+    email: 'admin@cardealership.com',
+    password: 'Admin@123456',
+    role: 'admin',
+    isActive: true,
+  });
+  console.log('✅ Default admin user created');
+
   console.log('\n🎉 Seed completed!');
-  console.log('📧 Admin: admin@autosks.com');
+  console.log('📧 Admin: admin@cardealership.com');
   console.log('🔑 Password: Admin@123456');
   process.exit(0);
 };
