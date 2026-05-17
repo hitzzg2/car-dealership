@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col } from 'antd';
 import {
-  CarOutlined, PhoneOutlined, MailOutlined,
-  EnvironmentOutlined, WechatOutlined,
+  CarOutlined, MailOutlined,
+  WhatsAppOutlined, WechatOutlined, SendOutlined,
 } from '@ant-design/icons';
-
-const { Text } = Typography;
 
 const Footer: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -28,7 +26,7 @@ const Footer: React.FC = () => {
                 <CarOutlined style={{ color: '#1a2035', fontSize: 20 }} />
               </div>
               <span style={{ color: 'white', fontSize: 20, fontWeight: 700 }}>
-                {i18n.language === 'zh' ? '汽车商城' : 'AutoMart'}
+                {i18n.language === 'zh' ? '汽车商城' : 'AutoSKS'}
               </span>
             </div>
             <p style={{ lineHeight: 1.8, fontSize: 14 }}>{t('footer.aboutText')}</p>
@@ -70,13 +68,13 @@ const Footer: React.FC = () => {
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                { icon: <PhoneOutlined />, text: '400-888-8888' },
-                { icon: <MailOutlined />, text: 'sales@cardealership.com' },
-                { icon: <EnvironmentOutlined />, text: i18n.language === 'zh' ? '北京市朝阳区建国路88号' : '88 Jianguo Road, Chaoyang, Beijing' },
-                { icon: <WechatOutlined />, text: 'cardealer2024' },
+                { icon: <WhatsAppOutlined style={{ color: '#25D366' }} />, text: '+86 159 1816 1885' },
+                { icon: <WechatOutlined style={{ color: '#07C160' }} />, text: 'chinavehice77' },
+                { icon: <SendOutlined style={{ color: '#0088cc' }} />, text: 'Telegram: +86 159 1816 1885' },
+                { icon: <MailOutlined style={{ color: '#EA4335' }} />, text: 'chinavehice77@gmail.com' },
               ].map((item, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
-                  <span style={{ color: '#c9a84c', width: 16 }}>{item.icon}</span>
+                  <span style={{ width: 16 }}>{item.icon}</span>
                   <span>{item.text}</span>
                 </div>
               ))}

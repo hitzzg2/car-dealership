@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Row, Col } from 'antd';
 import {
-  PhoneOutlined, MailOutlined, EnvironmentOutlined, WechatOutlined,
+  WhatsAppOutlined, MailOutlined, WechatOutlined, SendOutlined,
   SafetyOutlined, TrophyOutlined, TeamOutlined, CarOutlined,
 } from '@ant-design/icons';
 
@@ -49,10 +49,10 @@ const QuickContact: React.FC = () => {
         </div>
         <Row gutter={[20, 20]} justify="center">
           {[
-            { icon: <PhoneOutlined style={{ fontSize: 28, color: '#c9a84c' }} />, text: '400-888-8888', label: i18n.language === 'zh' ? '销售热线' : 'Sales Hotline' },
-            { icon: <WechatOutlined style={{ fontSize: 28, color: '#c9a84c' }} />, text: 'cardealer2024', label: i18n.language === 'zh' ? '微信客服' : 'WeChat' },
-            { icon: <MailOutlined style={{ fontSize: 28, color: '#c9a84c' }} />, text: 'sales@cardealership.com', label: i18n.language === 'zh' ? '邮箱' : 'Email' },
-            { icon: <EnvironmentOutlined style={{ fontSize: 28, color: '#c9a84c' }} />, text: i18n.language === 'zh' ? '北京朝阳区建国路88号' : '88 Jianguo Road, Beijing', label: i18n.language === 'zh' ? '门店地址' : 'Address' },
+            { icon: <WhatsAppOutlined style={{ fontSize: 28, color: '#25D366' }} />, text: '+86 159 1816 1885', label: 'WhatsApp' },
+            { icon: <WechatOutlined style={{ fontSize: 28, color: '#07C160' }} />, text: 'chinavehice77', label: i18n.language === 'zh' ? '微信' : 'WeChat' },
+            { icon: <SendOutlined style={{ fontSize: 28, color: '#0088cc' }} />, text: '+86 159 1816 1885', label: 'Telegram' },
+            { icon: <MailOutlined style={{ fontSize: 28, color: '#EA4335' }} />, text: 'chinavehice77@gmail.com', label: i18n.language === 'zh' ? '邮箱' : 'Email' },
           ].map((item, i) => (
             <Col xs={24} sm={12} md={6} key={i}>
               <div style={{
