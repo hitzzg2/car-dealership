@@ -28,7 +28,7 @@ const UserManagement: React.FC = () => {
       const res = await api.get('/auth/users');
       setUsers(res.data.data);
     } catch (err: any) {
-      message.error(err.response?.data?.message || '获取用户列表失败');
+      message.error(err.response?.data?.message || 'Failed to load users');
     } finally {
       setLoading(false);
     }
@@ -41,10 +41,10 @@ const UserManagement: React.FC = () => {
   const approveUser = async (id: string) => {
     try {
       await api.put(`/auth/users/${id}/approve`);
-      message.success('审批通过');
+      message.success('User approved');
       fetchUsers();
     } catch (err: any) {
-      message.error(err.response?.data?.message || '审批失败');
+      message.error(err.response?.data?.message || 'Approval failed');
     }
   };
 
@@ -54,75 +54,75 @@ const UserManagement: React.FC = () => {
       message.success(res.data.message);
       fetchUsers();
     } catch (err: any) {
-      message.error(err.response?.data?.message || '操作失败');
+      message.error(err.response?.data?.message || 'Action failed');
     }
   };
 
   const deleteUser = async (id: string) => {
     try {
       await api.delete(`/auth/users/${id}`);
-      message.success('用户已删除');
+      message.success('User deleted');
       fetchUsers();
     } catch (err: any) {
-      message.error(err.response?.data?.message || '删除失败');
+      message.error(err.response?.data?.message || 'Delete failed');
     }
   };
 
   const columns = [
     {
-      title: '用户名',
+      title: 'Username',
       dataIndex: 'username',
       key: 'username',
     },
     {
-      title: '邮箱',
+      title: 'Email',
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: '角色',
+      title: 'Role',
       dataIndex: 'role',
       key: 'role',
       render: (role: string) => (
         <Tag color={role === 'admin' ? 'gold' : 'blue'}>
-          {role === 'admin' ? '管理员' : '编辑'}
+          {role === 'admin' ? 'Admin' : 'Editor'}
         </Tag>
       ),
     },
     {
-      title: '审批状态',
+      title: 'Approval',
       dataIndex: 'isApproved',
       key: 'isApproved',
       render: (approved: boolean) => (
         approved
-          ? <Tag color="success">已通过</Tag>
-          : <Tag color="warning">待审批</Tag>
+          ? <Tag color="success">Approved</Tag>
+          : <Tag color="warning">Pending</Tag>
       ),
     },
     {
-      title: '账号状态',
+      title: 'Status',
       dataIndex: 'isActive',
       key: 'isActive',
       render: (active: boolean) => (
         active
-          ? <Tag color="success">启用</Tag>
-          : <Tag color="default">禁用</Tag>
+          ? <Tag color="success">Active</Tag>
+          : <Tag color="default">Disabled</Tag>
       ),
     },
     {
-      title: '注册时间',
+      title: 'Registered',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date: string) => new Date(date).toLocaleString('zh-CN'),
+      render: (date: string) => new Date(date).toLocaleString('en-US'),
     },
     {
-      title: '最后登录',
+      title: 'Last Login',
       dataIndex: 'lastLogin',
       key: 'lastLogin',
-      render: (date?: string) => date ? new Date(date).toLocaleString('zh-CN') : '—',
+      render: (date?: string) => date ? new Date(date).toLocaleString('en-US') : '—',
     },
     {
-      title: '操作',
+      title: 'Action',
       key: 'action',
       render: (_: any, record: User) => (
         <Space size="small">
@@ -133,7 +133,7 @@ const UserManagement: React.FC = () => {
               icon={<CheckOutlined />}
               onClick={() => approveUser(record._id)}
             >
-              通过
+              Approve
             </Button>
           )}
           {record.isApproved && (
@@ -142,17 +142,17 @@ const UserManagement: React.FC = () => {
               icon={record.isActive ? <CloseOutlined /> : <CheckOutlined />}
               onClick={() => toggleActive(record._id)}
             >
-              {record.isActive ? '禁用' : '启用'}
+              {record.isActive ? 'Disable' : 'Enable'}
             </Button>
           )}
           <Popconfirm
-            title="确定要删除此用户吗？"
+            title="Are you sure to delete this user?"
             onConfirm={() => deleteUser(record._id)}
-            okText="删除"
-            cancelText="取消"
+            okText="Delete"
+            cancelText="Cancel"
           >
             <Button danger size="small" icon={<DeleteOutlined />}>
-              删除
+              Delete
             </Button>
           </Popconfirm>
         </Space>
@@ -163,7 +163,7 @@ const UserManagement: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <Title level={3} style={{ margin: 0 }}>用户管理</Title>
+        <Title level={3} style={{ margin: 0 }}>User Management</Title>
       </div>
       <Table
         dataSource={users}

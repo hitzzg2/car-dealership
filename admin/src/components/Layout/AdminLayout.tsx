@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu, Avatar, Dropdown, Typography } from 'antd';
 import {
-  DashboardOutlined, TagOutlined,
+  DashboardOutlined, CarOutlined, TagOutlined,
   GiftOutlined, PhoneOutlined, LogoutOutlined,
   UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
   TeamOutlined, SettingOutlined,
@@ -25,26 +25,26 @@ const AdminLayout: React.FC = () => {
   };
 
   const menuItems = [
-    { key: '/', icon: <DashboardOutlined />, label: '仪表盘' },
-    { key: '/cars', icon: <CarOutlined />, label: '车辆管理' },
-    { key: '/categories', icon: <TagOutlined />, label: '分类管理' },
-    { key: '/promotions', icon: <GiftOutlined />, label: '促销管理' },
-    { key: '/contacts', icon: <PhoneOutlined />, label: '联系信息' },
-    ...(user.role === 'admin' ? [{ key: '/users', icon: <TeamOutlined />, label: '用户管理' }] : []),
-    { key: '/profile', icon: <SettingOutlined />, label: '个人信息' },
+    { key: '/', icon: <DashboardOutlined />, label: 'Dashboard' },
+    { key: '/cars', icon: <CarOutlined />, label: 'Cars' },
+    { key: '/categories', icon: <TagOutlined />, label: 'Categories' },
+    { key: '/promotions', icon: <GiftOutlined />, label: 'Promotions' },
+    { key: '/contacts', icon: <PhoneOutlined />, label: 'Contacts' },
+    ...(user.role === 'admin' ? [{ key: '/users', icon: <TeamOutlined />, label: 'Users' }] : []),
+    { key: '/profile', icon: <SettingOutlined />, label: 'Profile' },
   ];
 
   const userMenuItems = [
     {
       key: 'profile',
       icon: <UserOutlined />,
-      label: '个人信息',
+      label: 'Profile',
       onClick: () => navigate('/profile'),
     },
     {
       key: 'logout',
       icon: <LogoutOutlined />,
-      label: '退出登录',
+      label: 'Logout',
       danger: true,
       onClick: logout,
     },
@@ -144,7 +144,7 @@ const AdminLayout: React.FC = () => {
                   style={{ background: 'linear-gradient(135deg, #1a2035, #2d3a5e)' }}
                   icon={<UserOutlined />}
                 />
-                <Text style={{ fontSize: 14 }}>{user.username || '管理员'}</Text>
+                <Text style={{ fontSize: 14 }}>{user.username || 'Admin'}</Text>
               </div>
             </Dropdown>
           </div>

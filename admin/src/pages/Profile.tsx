@@ -17,12 +17,12 @@ const Profile: React.FC = () => {
     setLoading(true);
     try {
       const res = await api.put('/auth/profile', values);
-      message.success('用户名更新成功');
+      message.success('Username updated');
       const updatedUser = { ...user, username: res.data.user.username };
       localStorage.setItem('admin_user', JSON.stringify(updatedUser));
       window.dispatchEvent(new Event('storage'));
     } catch (err: any) {
-      message.error(err.response?.data?.message || '更新失败');
+      message.error(err.response?.data?.message || 'Update failed');
     } finally {
       setLoading(false);
     }
@@ -32,13 +32,13 @@ const Profile: React.FC = () => {
     setPwdLoading(true);
     try {
       await api.put('/auth/change-password', values);
-      message.success('密码修改成功，请重新登录');
+      message.success('Password changed, please login again');
       pwdForm.resetFields();
       localStorage.removeItem('admin_token');
       localStorage.removeItem('admin_user');
       window.location.href = '/login';
     } catch (err: any) {
-      message.error(err.response?.data?.message || '密码修改失败');
+      message.error(err.response?.data?.message || 'Password change failed');
     } finally {
       setPwdLoading(false);
     }
@@ -46,20 +46,20 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <Title level={3} style={{ marginBottom: 24 }}>个人信息</Title>
+      <Title level={3} style={{ marginBottom: 24 }}>Profile</Title>
 
       <div style={{ maxWidth: 600 }}>
         <Card
-          title="基本资料"
+          title="Basic Info"
           style={{ marginBottom: 24, borderRadius: 16, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
           bodyStyle={{ padding: '24px' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
             <Avatar size={64} style={{ background: 'linear-gradient(135deg, #1a2035, #2d3a5e)' }} icon={<UserOutlined />} />
             <div>
-              <div style={{ fontSize: 18, fontWeight: 700 }}>{user.username || '管理员'}</div>
+              <div style={{ fontSize: 18, fontWeight: 700 }}>{user.username || 'Admin'}</div>
               <div style={{ color: '#888', fontSize: 13 }}>{user.email}</div>
-              <div style={{ color: '#888', fontSize: 13 }}>角色: {user.role === 'admin' ? '管理员' : '编辑'}</div>
+              <div style={{ color: '#888', fontSize: 13 }}>Role: {user.role === 'admin' ? 'Admin' : 'Editor'}</div>
             </div>
           </div>
 
@@ -70,61 +70,61 @@ const Profile: React.FC = () => {
             onFinish={onUpdateProfile}
           >
             <Form.Item
-              label="用户名"
+              label="Username"
               name="username"
-              rules={[{ required: true, message: '请输入用户名' }]}
+              rules={[{ required: true, message: 'Please enter username' }]}
             >
-              <Input prefix={<UserOutlined />} placeholder="用户名" />
+              <Input prefix={<UserOutlined />} placeholder="Username" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading} icon={<SaveOutlined />}>
-                保存用户名
+                Save Username
               </Button>
             </Form.Item>
           </Form>
         </Card>
 
         <Card
-          title="修改密码"
+          title="Change Password"
           style={{ borderRadius: 16, border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
           bodyStyle={{ padding: '24px' }}
         >
           <Form form={pwdForm} layout="vertical" onFinish={onChangePassword}>
             <Form.Item
-              label="原密码"
+              label="Current Password"
               name="oldPassword"
-              rules={[{ required: true, message: '请输入原密码' }]}
+              rules={[{ required: true, message: 'Please enter current password' }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="原密码" />
+              <Input.Password prefix={<LockOutlined />} placeholder="Current Password" />
             </Form.Item>
             <Form.Item
-              label="新密码"
+              label="New Password"
               name="newPassword"
-              rules={[{ required: true, message: '请输入新密码' }]}
+              rules={[{ required: true, message: 'Please enter new password' }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="新密码" />
+              <Input.Password prefix={<LockOutlined />} placeholder="New Password" />
             </Form.Item>
             <Form.Item
-              label="确认新密码"
+              label="Confirm New Password"
               name="confirmPassword"
               dependencies={['newPassword']}
               rules={[
-                { required: true, message: '请确认新密码' },
+                { required: true, message: 'Please confirm new password' },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('newPassword') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('两次输入的密码不一致'));
+                    return Promise.reject(new Error('Passwords do not match'));
                   },
                 }),
               ]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="确认新密码" />
+              <Input.Password prefix={<LockOutlined />} placeholder="Confirm New Password" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={pwdLoading} danger icon={<LockOutlined />}>
-                修改密码
+                Change Password
               </Button>
             </Form.Item>
           </Form>

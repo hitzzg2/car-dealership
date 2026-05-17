@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Card, message, Typography, Divider } from 'antd';
-import { UserOutlined, LockOutlined, CarOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
@@ -17,17 +17,17 @@ const Login: React.FC = () => {
       const endpoint = isRegister ? '/auth/register' : '/auth/login';
       const res = await api.post(endpoint, values);
       if (isRegister) {
-        message.success(res.data.message || '注册申请已提交');
+        message.success(res.data.message || 'Registration submitted');
         setIsRegister(false);
       } else {
         const { token, user } = res.data;
         localStorage.setItem('admin_token', token);
         localStorage.setItem('admin_user', JSON.stringify(user));
-        message.success(`欢迎回来，${user.username}！`);
+        message.success(`Welcome back, ${user.username}!`);
         navigate('/');
       }
     } catch (err: any) {
-      message.error(err.response?.data?.message || (isRegister ? '注册失败' : '登录失败，请检查账号密码'));
+      message.error(err.response?.data?.message || (isRegister ? 'Registration failed' : 'Login failed, please check your credentials'));
     } finally {
       setLoading(false);
     }
@@ -74,22 +74,27 @@ const Login: React.FC = () => {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px',
             boxShadow: '0 8px 24px rgba(26,32,53,0.4)',
+            overflow: 'hidden',
           }}>
-            <CarOutlined style={{ color: '#c9a84c', fontSize: 28 }} />
+            <img
+              src="/favicon.png"
+              alt="AutoSKS"
+              style={{ width: 40, height: 40, objectFit: 'contain' }}
+            />
           </div>
-          <Title level={3} style={{ marginBottom: 4, color: '#1a2035' }}>汽车商城</Title>
-          <Text type="secondary">后台管理系统</Text>
+          <Title level={3} style={{ marginBottom: 4, color: '#1a2035' }}>AutoSKS</Title>
+          <Text type="secondary">Admin Dashboard</Text>
         </div>
 
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
           {isRegister && (
             <Form.Item
               name="username"
-              rules={[{ required: true, message: '请输入用户名' }]}
+              rules={[{ required: true, message: 'Please enter username' }]}
             >
               <Input
                 prefix={<UserOutlined style={{ color: '#bbb' }} />}
-                placeholder="用户名"
+                placeholder="Username"
                 size="large"
                 style={{ borderRadius: 10, height: 48 }}
               />
@@ -99,13 +104,13 @@ const Login: React.FC = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: '请输入管理员邮箱' },
-              { type: 'email', message: '邮箱格式不正确' },
+              { required: true, message: 'Please enter email' },
+              { type: 'email', message: 'Invalid email format' },
             ]}
           >
             <Input
               prefix={<UserOutlined style={{ color: '#bbb' }} />}
-              placeholder="管理员邮箱"
+              placeholder="Email"
               size="large"
               style={{ borderRadius: 10, height: 48 }}
             />
@@ -113,11 +118,11 @@ const Login: React.FC = () => {
 
           <Form.Item
             name="password"
-            rules={[{ required: true, message: '请输入密码' }]}
+            rules={[{ required: true, message: 'Please enter password' }]}
           >
             <Input.Password
               prefix={<LockOutlined style={{ color: '#bbb' }} />}
-              placeholder="登录密码"
+              placeholder="Password"
               size="large"
               style={{ borderRadius: 10, height: 48 }}
             />
@@ -139,7 +144,7 @@ const Login: React.FC = () => {
               marginTop: 8,
             }}
           >
-            {isRegister ? '提交注册申请' : '登录管理后台'}
+            {isRegister ? 'Submit Registration' : 'Login to Dashboard'}
           </Button>
         </Form>
 
@@ -149,13 +154,13 @@ const Login: React.FC = () => {
             style={{ cursor: 'pointer', fontSize: 13 }}
             onClick={() => setIsRegister(!isRegister)}
           >
-            {isRegister ? '已有账号？去登录' : '没有账号？去注册'}
+            {isRegister ? 'Already have an account? Login' : 'No account? Register'}
           </Text>
         </div>
 
         {isRegister && (
           <div style={{ marginTop: 16, fontSize: 12, color: '#999', textAlign: 'center' }}>
-            注册后需等待管理员审批才能登录
+            After registration, please wait for admin approval
           </div>
         )}
       </Card>
